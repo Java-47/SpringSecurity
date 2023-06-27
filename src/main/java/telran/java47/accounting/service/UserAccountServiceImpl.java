@@ -84,6 +84,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		UserAccount userAccount = userAccountRepository.findById(login).orElseThrow(() -> new UserNotFoundException());
 		String password = passwordEncoder.encode(newPassword);
 		userAccount.setPassword(password);
+		userAccount.setPasswordExpire(LocalDate.now().plusDays(60));
 		userAccountRepository.save(userAccount);
 
 	}
