@@ -1,5 +1,7 @@
 package telran.java47.accounting.service;
 
+import java.time.LocalDate;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		userAccount.addRole("USER");
 		String password = passwordEncoder.encode(userRegisterDto.getPassword());
 		userAccount.setPassword(password);
+		userAccount.setPasswordExpire(LocalDate.now().plusDays(60));
 		userAccountRepository.save(userAccount);
 		return modelMapper.map(userAccount, UserDto.class);
 	}
